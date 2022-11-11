@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
+* {
+	margin: 0px;
+	padding: 0px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mainContainer {
+	background-color: #66aafa;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.title {
+	margin-top: 25px;
+	text-align: center;
+	font-size: 50px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.board {
+	background-color: rgba(255, 255, 255, 0.7);
+	max-width: 350px;
+	padding: 10px;
+	border-radius: 8px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.instructions {
+	text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.img {
+	width: 95%;
+}
+
+.hideWord {
+	font-size: 45px;
+	text-align: center;
+}
+
+.keysSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.key {
+	padding: 5px;
+	font-weight: bold;
+	border-radius: 6px;
+	margin: 3px;
+	width: 25px;
+}
+
+.keyOk {
+	padding: 5px;
+	font-weight: bold;
+	border-radius: 6px;
+	margin: 3px;
+	border-color: #45de47;
+	width: 25px;
+}
+
+.keyError {
+	padding: 5px;
+	font-weight: bold;
+	border-radius: 6px;
+	margin: 3px;
+	border-color: #de454a;
+	width: 25px;
+}
+
+.btnsPanel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.7);
+	max-width: 350px;
+	padding: 10px;
+	border-radius: 8px;
+	margin-top: 20px;
+}
+
+.start {
+	margin-top: 15px;
+	padding: 5px;
+	border-radius: 6px;
+	border-color: #45de47;
+	font-weight: bold;
+}
+
+.end {
+	margin-top: 15px;
+	padding: 5px;
+	border-radius: 6px;
+	border-color: #de454a;
+	font-weight: bold;
 }
