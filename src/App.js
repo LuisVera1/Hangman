@@ -1,170 +1,258 @@
 import './App.css';
 import React, { useState } from 'react';
-
-const alredyUsed = {
-	A: {
-		press: false,
-		inWord: null,
-	},
-	B: {
-		press: false,
-		inWord: null,
-	},
-	C: {
-		press: false,
-		inWord: null,
-	},
-	D: {
-		press: false,
-		inWord: null,
-	},
-	E: {
-		press: false,
-		inWord: null,
-	},
-	F: {
-		press: false,
-		inWord: null,
-	},
-	G: {
-		press: false,
-		inWord: null,
-	},
-	H: {
-		press: false,
-		inWord: null,
-	},
-	I: {
-		press: false,
-		inWord: null,
-	},
-	J: {
-		press: false,
-		inWord: null,
-	},
-	K: {
-		press: false,
-		inWord: null,
-	},
-	L: {
-		press: false,
-		inWord: null,
-	},
-	M: {
-		press: false,
-		inWord: null,
-	},
-	N: {
-		press: false,
-		inWord: null,
-	},
-	Ñ: {
-		press: false,
-		inWord: null,
-	},
-	O: {
-		press: false,
-		inWord: null,
-	},
-	P: {
-		press: false,
-		inWord: null,
-	},
-	Q: {
-		press: false,
-		inWord: null,
-	},
-	R: {
-		press: false,
-		inWord: null,
-	},
-	S: {
-		press: false,
-		inWord: null,
-	},
-	T: {
-		press: false,
-		inWord: null,
-	},
-	U: {
-		press: false,
-		inWord: null,
-	},
-	V: {
-		press: false,
-		inWord: null,
-	},
-	W: {
-		press: false,
-		inWord: null,
-	},
-	X: {
-		press: false,
-		inWord: null,
-	},
-	Y: {
-		press: false,
-		inWord: null,
-	},
-	Z: {
-		press: false,
-		inWord: null,
-	},
-};
-const alphabet = [
-	'Q',
-	'W',
-	'E',
-	'R',
-	'T',
-	'Y',
-	'U',
-	'I',
-	'O',
-	'P',
-	'NL',
-	'A',
-	'S',
-	'D',
-	'F',
-	'G',
-	'H',
-	'J',
-	'K',
-	'L',
-	'Ñ',
-	'NL',
-	'Z',
-	'X',
-	'C',
-	'V',
-	'B',
-	'N',
-	'M',
-];
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
+	const alredyUsed = {
+		A: {
+			press: false,
+			inWord: null,
+		},
+		B: {
+			press: false,
+			inWord: null,
+		},
+		C: {
+			press: false,
+			inWord: null,
+		},
+		D: {
+			press: false,
+			inWord: null,
+		},
+		E: {
+			press: false,
+			inWord: null,
+		},
+		F: {
+			press: false,
+			inWord: null,
+		},
+		G: {
+			press: false,
+			inWord: null,
+		},
+		H: {
+			press: false,
+			inWord: null,
+		},
+		I: {
+			press: false,
+			inWord: null,
+		},
+		J: {
+			press: false,
+			inWord: null,
+		},
+		K: {
+			press: false,
+			inWord: null,
+		},
+		L: {
+			press: false,
+			inWord: null,
+		},
+		M: {
+			press: false,
+			inWord: null,
+		},
+		N: {
+			press: false,
+			inWord: null,
+		},
+		Ñ: {
+			press: false,
+			inWord: null,
+		},
+		O: {
+			press: false,
+			inWord: null,
+		},
+		P: {
+			press: false,
+			inWord: null,
+		},
+		Q: {
+			press: false,
+			inWord: null,
+		},
+		R: {
+			press: false,
+			inWord: null,
+		},
+		S: {
+			press: false,
+			inWord: null,
+		},
+		T: {
+			press: false,
+			inWord: null,
+		},
+		U: {
+			press: false,
+			inWord: null,
+		},
+		V: {
+			press: false,
+			inWord: null,
+		},
+		W: {
+			press: false,
+			inWord: null,
+		},
+		X: {
+			press: false,
+			inWord: null,
+		},
+		Y: {
+			press: false,
+			inWord: null,
+		},
+		Z: {
+			press: false,
+			inWord: null,
+		},
+	};
+
+	const alphabet = [
+		'Q',
+		'W',
+		'E',
+		'R',
+		'T',
+		'Y',
+		'U',
+		'I',
+		'O',
+		'P',
+		'NL',
+		'A',
+		'S',
+		'D',
+		'F',
+		'G',
+		'H',
+		'J',
+		'K',
+		'L',
+		'Ñ',
+		'NL',
+		'Z',
+		'X',
+		'C',
+		'V',
+		'B',
+		'N',
+		'M',
+	];
+
 	const [game, setGame] = useState(false); //Is game active?
 	const [word, setWord] = useState(''); // Word guide
 	const [used, setUsed] = useState(alredyUsed);
 	const [fails, setFails] = useState(0); //Fails
+	const [end, setEnd] = useState(false); //end of the game (by win or lose)
+
+	console.log('fallas: ' + fails)
 
 	let selectedWord = 'Mermelada';
 
-	if (fails > 5) {
-		console.log('¡Haz fallado!');
+
+	if (fails > 5 && !end) {
+		toast.error('¡Has fallado!');
+		setEnd(true);
+		stopKeyboard();
 	}
 
-	if (game && word.indexOf('-') < 0) {
-		console.log('haz ganado');
+	if (game && word.indexOf('-') < 0 && !end) {
+		toast.success('¡GANASTE!');
+		setEnd(true);
+		stopKeyboard();
 	}
 
-	const instr = 'Adivina la palabra, ' + selectedWord.length + ' letras';
 
+
+
+
+	//#region conditional rendering
+	const instr = game
+		? 'Adivina la palabra, ' + selectedWord.length + ' letras'
+		: 'Adivina la palabra';
+
+	const success = (index, item) => (
+		<button className="keyOk" key={index} disabled>
+			{item}
+		</button>
+	);
+
+	const error = (index, item) => (
+		<button className="keyError" key={index} disabled>
+			{item}
+		</button>
+	);
+
+	const btnStartGame = !game ? (
+		<button
+			className="start"
+			onClick={() => {
+				setGame(true);
+				showLines();
+			}}
+		>
+			Iniciar Juego
+		</button>
+	) : null;
+
+	const nextGame =
+		game && end ? (
+			<button
+				className="start"
+				onClick={() => {
+					nextGamefun();
+					console.log('pizza');
+				}}
+			>
+				Siguiente palabra
+			</button>
+		) : null;
+
+	const btnEndGame = game ? (
+		<button
+			className="end"
+			onClick={() => {
+				endGame();
+			}}
+		>
+			Terminar Juego
+		</button>
+	) : null;
+
+	//#endregion
+
+	//#region functions
 	function showLines() {
 		let guide = '-'.repeat(selectedWord.length);
 		setWord(guide);
 	}
+
+const imgPath = 'img/' + fails + '.png'
+
+
+	//Evals status of game (win or lose)
+function stopKeyboard(){
+	let stopKeyboard = used;
+
+	for(let i of alphabet){
+		if(i !== 'NL'){
+			stopKeyboard[i].press = true;
+		}
+	}
+
+	setUsed(stopKeyboard)
+
+	//console.log(stopKeyboard)
+	//setUsed(stopKeyboard)
+}
+
 
 	function createNewGuide(newLetter) {
 		//Checks the diference bettweem the guide and the string with the new letter
@@ -209,23 +297,13 @@ function App() {
 		newState[item].inWord = res;
 
 		setUsed(newState);
-
-		//add fail
-		if (success <= 0) setFails(fails + 1);
+		
+		//add a fail
+		if (success <= 0){
+			setFails(fails + 1);
+		}
 		createNewGuide(result);
 	};
-
-	const success = (index, item) => (
-		<button className="keyOk" key={index} disabled>
-			{item}
-		</button>
-	);
-
-	const error = (index, item) => (
-		<button className="keyError" key={index} disabled>
-			{item}
-		</button>
-	);
 
 	const createKeyboard = (item, index) => {
 		if (item !== 'NL') {
@@ -254,43 +332,38 @@ function App() {
 		return createKeyboard(item, index);
 	});
 
-	const btnStartGame = !game ? (
-		<button
-			className="start"
-			onClick={() => {
-				setGame(true);
-				showLines();
-			}}
-		>
-			Iniciar Juego
-		</button>
-	) : null;
+	function endGame() {
+		setGame(false);
+		setFails(0);
+		setUsed(alredyUsed);
+	}
 
-	const btnEndGame = game ? (
-		<button
-			className="end"
-			onClick={() => {
-				setGame(false);
-			}}
-		>
-			Terminar Juego
-		</button>
-	) : null;
+	function nextGamefun() {
+		setFails(0);
+		setUsed(alredyUsed);
+		setEnd(false);
+	}
+
+	//#endregion
 
 	return (
 		<div className="mainContainer">
+			<div>
+				<Toaster />
+			</div>
 			<h1 className="title">Hangman</h1>
 
 			<div className="board">
 				<h4 className="instructions">{instr}</h4>
 				<br></br>
-				<img className="img" alt="hangman" src="base.png"></img>
+				<img className="img" alt="hangman" src={imgPath}></img>
 				{game && <p className="hideWord"> {word}</p>}
 			</div>
 
 			<div className="btnsPanel">
 				{game && <div className="keySection">{allKeyboard}</div>}
 				{btnStartGame}
+				{nextGame}
 				{btnEndGame}
 			</div>
 		</div>
