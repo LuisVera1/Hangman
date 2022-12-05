@@ -6,111 +6,111 @@ function App() {
 	const alredyUsed = {
 		A: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		B: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		C: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		D: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		E: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		F: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		G: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		H: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		I: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		J: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		K: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		L: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		M: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		N: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		Ñ: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		O: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		P: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		Q: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		R: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		S: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		T: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		U: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		V: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		W: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		X: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		Y: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 		Z: {
 			press: false,
-			inWord: null,
+			status: 'key',
 		},
 	};
 
@@ -125,7 +125,6 @@ function App() {
 		'I',
 		'O',
 		'P',
-		'NL',
 		'A',
 		'S',
 		'D',
@@ -136,7 +135,6 @@ function App() {
 		'K',
 		'L',
 		'Ñ',
-		'NL',
 		'Z',
 		'X',
 		'C',
@@ -151,49 +149,44 @@ function App() {
 	const [used, setUsed] = useState(alredyUsed);
 	const [fails, setFails] = useState(0); //Fails
 	const [end, setEnd] = useState(false); //end of the game (by win or lose)
+	const [list, setList] = useState({
+		category: '',
+		number: 0,
+		words: ['mermelada', 'quesadilla', 'departamento', 'ciudad', 'automovil'],
+	}); //list of words to play
 
-	console.log('fallas: ' + fails)
+	/* Steps
+		1. Select word
+		2. Show instructions
+		3. Show initial image (imgpath)
+		4. Show button btnStartGame
+			4.1 CreateEachKey in allKeyboard
 
-	let selectedWord = 'Mermelada';
+	*/
 
+	let selectedWord = list.words[list.number];
 
-	if (fails > 5 && !end) {
-		toast.error('¡Has fallado!');
+	if (fails >= 6 && !end) {
+		//toast.error('¡Has fallado!');
 		setEnd(true);
 		stopKeyboard();
 	}
 
 	if (game && word.indexOf('-') < 0 && !end) {
-		toast.success('¡GANASTE!');
+		//toast.success('¡GANASTE!');
 		setEnd(true);
 		stopKeyboard();
 	}
 
-
-
-
-
-	//#region conditional rendering
-	const instr = game
+	const instructions = game
 		? 'Adivina la palabra, ' + selectedWord.length + ' letras'
 		: 'Adivina la palabra';
-
-	const success = (index, item) => (
-		<button className="keyOk" key={index} disabled>
-			{item}
-		</button>
-	);
-
-	const error = (index, item) => (
-		<button className="keyError" key={index} disabled>
-			{item}
-		</button>
-	);
 
 	const btnStartGame = !game ? (
 		<button
 			className="start"
 			onClick={() => {
+				setUsed(alredyUsed);
 				setGame(true);
 				showLines();
 			}}
@@ -208,7 +201,6 @@ function App() {
 				className="start"
 				onClick={() => {
 					nextGamefun();
-					console.log('pizza');
 				}}
 			>
 				Siguiente palabra
@@ -226,33 +218,23 @@ function App() {
 		</button>
 	) : null;
 
-	//#endregion
-
 	//#region functions
 	function showLines() {
-		let guide = '-'.repeat(selectedWord.length);
+		let guide = '-'.repeat(list.words[list.number].length);
 		setWord(guide);
 	}
 
-const imgPath = 'img/' + fails + '.png'
-
+	const imgPath = 'img/' + fails + '.png';
 
 	//Evals status of game (win or lose)
-function stopKeyboard(){
-	let stopKeyboard = used;
+	function stopKeyboard() {
+		let stopKeyboard = used;
 
-	for(let i of alphabet){
-		if(i !== 'NL'){
+		for (let i of alphabet) {
 			stopKeyboard[i].press = true;
 		}
+		setUsed(stopKeyboard);
 	}
-
-	setUsed(stopKeyboard)
-
-	//console.log(stopKeyboard)
-	//setUsed(stopKeyboard)
-}
-
 
 	function createNewGuide(newLetter) {
 		//Checks the diference bettweem the guide and the string with the new letter
@@ -285,7 +267,7 @@ function stopKeyboard(){
 			}
 		}
 
-		//eval if the letter is error or success
+		//eval if the letter is error or success: 0 == no exist
 		let res = success > 0;
 
 		//Update useState of used letters to disable buttons
@@ -294,54 +276,58 @@ function stopKeyboard(){
 		};
 
 		newState[item].press = true;
-		newState[item].inWord = res;
+		newState[item].status = res > 0 ? 'keyOk' : 'keyError';
 
 		setUsed(newState);
-		
+
 		//add a fail
-		if (success <= 0){
+		if (success <= 0) {
 			setFails(fails + 1);
 		}
 		createNewGuide(result);
 	};
 
-	const createKeyboard = (item, index) => {
-		if (item !== 'NL') {
-			//Disabled?
-			if (used[item].press === true) {
-				// Color of buttons in case of success or error
-				if (used[item].inWord) {
-					return success(index, item);
-				} else {
-					return error(index, item);
-				}
-			} else {
-				//Enabled
-				return (
-					<button className="key" key={index} onClick={() => searchCharacter(item)}>
-						{item}
-					</button>
-				);
-			}
+	const createEachKey = (item, index) => {
+		//pressed buttons
+		if (used[item].press === true) {
+			return (
+				<button className={used[item].status} key={index} disabled>
+					{item}
+				</button>
+			);
 		} else {
-			return <br key={index}></br>;
+			//unpressed buttons
+			return (
+				<button className={used[item].status} key={index} onClick={() => searchCharacter(item)}>
+					{item}
+				</button>
+			);
 		}
 	};
 
 	const allKeyboard = alphabet.map((item, index) => {
-		return createKeyboard(item, index);
+		return createEachKey(item, index);
 	});
 
+	function nextWord() {
+		let configNextGame = list;
+		configNextGame.number++;
+		setList(configNextGame);
+	}
+
 	function endGame() {
+		nextWord();
 		setGame(false);
 		setFails(0);
-		setUsed(alredyUsed);
+		setEnd(false);
 	}
 
 	function nextGamefun() {
+		nextWord();
 		setFails(0);
-		setUsed(alredyUsed);
 		setEnd(false);
+		setUsed(alredyUsed);
+		showLines();
 	}
 
 	//#endregion
@@ -354,14 +340,14 @@ function stopKeyboard(){
 			<h1 className="title">Hangman</h1>
 
 			<div className="board">
-				<h4 className="instructions">{instr}</h4>
+				<h4 className="instructions">{instructions}</h4>
 				<br></br>
 				<img className="img" alt="hangman" src={imgPath}></img>
 				{game && <p className="hideWord"> {word}</p>}
 			</div>
 
 			<div className="btnsPanel">
-				{game && <div className="keySection">{allKeyboard}</div>}
+				{game && <div className="keysSection">{allKeyboard}</div>}
 				{btnStartGame}
 				{nextGame}
 				{btnEndGame}
