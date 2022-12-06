@@ -1,8 +1,14 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
+	// useEffect(( ) =>{
+
+	// console.log('useEffect')
+
+	// })
+
 	const alredyUsed = {
 		A: {
 			press: false,
@@ -152,7 +158,18 @@ function App() {
 	const [list, setList] = useState({
 		category: '',
 		number: 0,
-		words: ['mermelada', 'quesadilla', 'departamento', 'ciudad', 'automovil'],
+		words: [
+			'mermelada',
+			'quesadilla',
+			'departamento',
+			'ciudad',
+			'automovil',
+			'carretera',
+			'alfabeto',
+			'murcielago',
+			'piramide',
+			'escritorio',
+		],
 	}); //list of words to play
 
 	/* Steps
@@ -161,19 +178,18 @@ function App() {
 		3. Show initial image (imgpath)
 		4. Show button btnStartGame
 			4.1 CreateEachKey in allKeyboard
-
 	*/
 
 	let selectedWord = list.words[list.number];
 
 	if (fails >= 6 && !end) {
-		//toast.error('¡Has fallado!');
+		toast.error('¡Has fallado!');
 		setEnd(true);
 		stopKeyboard();
 	}
 
 	if (game && word.indexOf('-') < 0 && !end) {
-		//toast.success('¡GANASTE!');
+		toast.success('¡GANASTE!');
 		setEnd(true);
 		stopKeyboard();
 	}

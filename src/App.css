@@ -4,7 +4,6 @@
 }
 
 .mainContainer {
-	background-color: #66aafa;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -15,17 +14,22 @@
 	margin-top: 25px;
 	text-align: center;
 	font-size: 50px;
+	color: #ffffff;
 }
 
 .board {
-	background-color: rgba(255, 255, 255, 0.7);
 	max-width: 350px;
 	padding: 10px;
-	border-radius: 8px;
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	background: rgba(255, 255, 255, 0.1);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(3.5px);
+	-webkit-backdrop-filter: blur(3.5px);
+	border-radius: 10px;
 }
 
 .instructions {
@@ -80,15 +84,19 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background-color: rgba(255, 255, 255, 0.7);
 	max-width: 350px;
 	padding: 10px;
-	border-radius: 8px;
 	margin-top: 20px;
+
+	background: rgba(255, 255, 255, 0.1);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(3.5px);
+	-webkit-backdrop-filter: blur(3.5px);
+	border-radius: 10px;
 }
 
 .start {
-	margin-top: 15px;
+	margin: 10px 0px;
 	padding: 5px;
 	border-radius: 6px;
 	border-color: #45de47;
@@ -96,7 +104,7 @@
 }
 
 .end {
-	margin-top: 15px;
+	margin-top: 10px;
 	padding: 5px;
 	border-radius: 6px;
 	border-color: #de454a;
